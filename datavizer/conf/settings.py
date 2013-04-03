@@ -123,9 +123,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'registration'
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'registration',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -167,5 +166,4 @@ EMAIL_HOST = os.getenv('DJ_REG_EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.getenv('DJ_REG_EMAIL_PORT', '1234')
 EMAIL_HOST_USER = os.getenv('DJ_REG_EMAIL_HOST_USER', 'username')
 EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', 'password')
-
 
