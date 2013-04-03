@@ -1,5 +1,7 @@
 # Django settings for datavizer project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -120,7 +122,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'south'
+    'south',
+    'registration'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -155,3 +158,14 @@ LOGGING = {
         },
     }
 }
+
+
+# Django Registration
+
+ACCOUNT_ACTIVATION_DAYS = os.getenv('DJ_REG_ACCOUNT_ACTIVATION_DAYS', 7)
+EMAIL_HOST = os.getenv('DJ_REG_EMAIL_HOST', 'localhost')
+EMAIL_PORT = os.getenv('DJ_REG_EMAIL_PORT', '1234')
+EMAIL_HOST_USER = os.getenv('DJ_REG_EMAIL_HOST_USER', 'username')
+EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', 'password')
+
+
