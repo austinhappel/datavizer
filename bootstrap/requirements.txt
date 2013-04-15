@@ -1,5 +1,8 @@
-Django==1.4.5
+Django==1.5.1
 South==0.7.6
-django-registration==0.8
+django-appconf==0.6
+django-compressor==1.3
+-e git://github.com/austinhappel/django-registration.git@72da9c90899972598e98b19961045d3c8ea4e9a0#egg=django_registration-dev
 psycopg2==2.4.6
+six==1.3.0
 wsgiref==0.1.2

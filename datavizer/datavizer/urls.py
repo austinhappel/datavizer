@@ -16,4 +16,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^admin/', include('django.contrib.admin.urls')),
     (r'^accounts/', include('registration.urls')),
+
+    # catch-all for pages
+    (r'^$', include('apps.pages.urls')),
+    (r'^/$', include('apps.pages.urls')),
 )

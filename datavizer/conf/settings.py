@@ -2,6 +2,8 @@
 
 import os
 
+PROJECT_DIR = os.getcwd()
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -71,6 +73,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -91,7 +94,7 @@ SECRET_KEY = '3vt@!@q3c(yl_-xi+pq+f6=_kht!zd+eotu!-13lj6^4iktbks'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+#   'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,6 +113,7 @@ ROOT_URLCONF = 'datavizer.urls'
 WSGI_APPLICATION = 'datavizer.wsgi.application'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -125,6 +129,9 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'django.contrib.admin',
+    'django.contrib.humanize',
+    "compressor",
+
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -163,7 +170,20 @@ LOGGING = {
 
 ACCOUNT_ACTIVATION_DAYS = os.getenv('DJ_REG_ACCOUNT_ACTIVATION_DAYS', 7)
 EMAIL_HOST = os.getenv('DJ_REG_EMAIL_HOST', 'localhost')
-EMAIL_PORT = os.getenv('DJ_REG_EMAIL_PORT', '1234')
-EMAIL_HOST_USER = os.getenv('DJ_REG_EMAIL_HOST_USER', 'username')
-EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', 'password')
+EMAIL_PORT = os.getenv('DJ_REG_EMAIL_PORT', '1025')
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = os.getenv('DJ_REG_EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', '')
 
+# django-compressor
+
+# Controls the URL that linked files will be read from and compressed files will be written to.
+# COMPRESS_URL
+
+# Controls the absolute file path that linked static will be read from and compressed static will be written to when using the default COMPRESS_STORAGE compressor.storage.CompressorFileStorage.
+# Default :   STATIC_ROOT
+# COMPRESS_ROOT
+
+# Controls the directory inside COMPRESS_ROOT that compressed files will be written to.
+# Default :   'CACHE'
+# COMPRESS_OUTPUT_DIR
