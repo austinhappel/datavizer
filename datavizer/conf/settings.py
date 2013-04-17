@@ -174,6 +174,8 @@ EMAIL_PORT = os.getenv('DJ_REG_EMAIL_PORT', '1025')
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = os.getenv('DJ_REG_EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', '')
+REGISTRATION_DEFAULT_GROUP_NAME = 'basic_users'
+
 
 # django-compressor
 
@@ -187,3 +189,5 @@ EMAIL_HOST_PASSWORD = os.getenv('DJ_REG_EMAIL_HOST_PASSWORD', '')
 # Controls the directory inside COMPRESS_ROOT that compressed files will be written to.
 # Default :   'CACHE'
 # COMPRESS_OUTPUT_DIR
+
+

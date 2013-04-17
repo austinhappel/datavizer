@@ -7,5 +7,15 @@
 <div class="row">
     <h1>Datavizer</h1>
 </div>
+<div class="row">
+    {% if is_logged_in %}
+        Welcome {{ user_name }}
+        <a href="/accounts/logout">logout</a>
+    {% else %}
+        <a href="/accounts/login">login</a>
+        <a href="/accounts/register">register</a>
+    {% endif %}
+    
+</div>
 
 {% endblock %}
