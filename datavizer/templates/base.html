@@ -31,7 +31,7 @@
 
         <header class="row">
             <div class="hero">
-                <h1><a href="/" >Datavizer</a></h1>
+                <h1><a href="{% url 'apps.pages.views.index' %}" >Datavizer</a></h1>
                 <div class="user-info">
                     
                 </div>    
@@ -40,15 +40,19 @@
             <nav class="navbar">
                 <div class="navbar-inner">
                     <ul class="nav">
-                        <li>
+                        <li {% if activePage == 'account' %} class="active" {% endif %}>
                             {% if userInfo.username %}
-                            <a href="/user/{{ userInfo.username }}">Your account</a>
+                            <a href="{% url 'apps.user_management.views.user_account' %}">Your account</a>
                             {% else %}
                             <a href="accounts/login">Login</a>
                             {% endif %}
                         </li>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/browse">Browse visualizations</a></li>
+                        <li {% if activePage == 'about' %} class="active" {% endif %}>
+                            <a href="{% url 'apps.pages.views.about' %}">About</a>
+                        </li>
+                        <li {% if activePage == 'browse' %} class="active" {% endif %}>
+                            <a href="{% url 'apps.pages.views.browse' %}">Browse visualizations</a>
+                        </li>
                     </ul>    
                 </div>
             </nav>

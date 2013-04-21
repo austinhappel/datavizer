@@ -37,7 +37,8 @@ def user_account(request, username=None, userInfo=None):
         userInfo = get_user_info_from_session_key(request.session.session_key)
 
     templateVars = {
-        'userInfo': userInfo
+        'userInfo': userInfo,
+        'activePage': 'account'
     }
     print templateVars
     context = RequestContext(request, templateVars)

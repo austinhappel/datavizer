@@ -17,7 +17,8 @@ def index(request, userInfo=None):
 @get_user_info
 def about(request, userInfo=None):
     templateVars = {
-        'userInfo': userInfo
+        'userInfo': userInfo,
+        'activePage': 'about'
     }
     context = RequestContext(request, templateVars)
     return render(request, 'pages/about.html', context)
@@ -26,7 +27,8 @@ def about(request, userInfo=None):
 @get_user_info
 def browse(request, userInfo=None):
     templateVars = {
-        'userInfo': userInfo
+        'userInfo': userInfo,
+        'activePage': 'browse'
     }
     context = RequestContext(request, templateVars)
     return render(request, 'pages/browse.html', context)
