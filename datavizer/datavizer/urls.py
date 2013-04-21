@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
 # from django.views.generic.simple import direct_to_template
 
 admin.autodiscover()
@@ -17,7 +18,18 @@ urlpatterns = patterns('',
     # url(r'^admin/', include('django.contrib.admin.urls')),
     (r'^accounts/', include('registration.backends.default.urls')),
 
-    # catch-all for pages
-    (r'^$', include('apps.pages.urls')),
-    (r'^/$', include('apps.pages.urls')),
+    # user account views
+    (r'^user/', include('apps.user_management.urls')),
+
+    # pages urls
+    # home
+    url(r'^/?$', 'apps.pages.views.index', name='index'),
+    # about
+    url(r'^about/?$', 'apps.pages.views.about', name='about'),
+
+    # browse
+    url(r'^browse/?$', 'apps.pages.views.browse', name='browse'),
 )
+
+handler404 = 'apps.pages.views.error_404'
+handler500 = 'apps.pages.views.error_500'

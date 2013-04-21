@@ -6,13 +6,56 @@
     {% compress css %}
     <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" charset="utf-8">
     <link rel="stylesheet" href="/static/css/bootstrap-responsive.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="/static/css/screen.css" type="text/css" charset="utf-8">
     {% endcompress %}
     <title>{% block title %}Datavizer{% endblock %}</title>
 </head>
 
 <body>
+
+    {% if userInfo.username %}
+
+    <div class="navbar navbar-static-top navbar-inverse user-info">
+        <div class="navbar-inner">
+            <a class="brand" href="/user/{{ userInfo.username }}">Logged in as: <strong>{{ userInfo.username }}</strong></a>
+            <ul class="nav">
+                <li class="divider-vertical"></li>
+                <li><a href="/accounts/logout">logout</a></li>
+            </ul>    
+        </div>
+    </div>    
+
+    {% endif %}
+
     <section id="content" class="container">
+
+        <header class="row">
+            <div class="hero">
+                <h1><a href="/" >Datavizer</a></h1>
+                <div class="user-info">
+                    
+                </div>    
+            </div>
+            
+            <nav class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li>
+                            {% if userInfo.username %}
+                            <a href="/user/{{ userInfo.username }}">Your account</a>
+                            {% else %}
+                            <a href="accounts/login">Login</a>
+                            {% endif %}
+                        </li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/browse">Browse visualizations</a></li>
+                    </ul>    
+                </div>
+            </nav>
+        </header>
+
         {% block content %}{% endblock %}
+
     </section>
     {% compress javascript %}
     <script src="/static/js/bootstrap.js"></script>

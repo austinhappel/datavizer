@@ -1,16 +1,50 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+# from django.http import HttpResponse
+from django.shortcuts import render  # get_object_or_404
 from django.template import RequestContext
+from apps.user_management.view_decorators import get_user_info
 
 
-def index(request):
-    print request.session.keys()
+@get_user_info
+def index(request, userInfo=None):
+    templateVars = {
+        'userInfo': userInfo
+    }
 
-    tempVars = {}
-
-    if request.session.get('_auth_user_id') is not None:
-        tempVars['is_logged_in'] = True
-        tempVars['user_name'] = 'TODO: Add a user here!'
-
-    context = RequestContext(request, tempVars)
+    context = RequestContext(request, templateVars)
     return render(request, 'pages/index.html', context)
+
+
+@get_user_info
+def about(request, userInfo=None):
+    templateVars = {
+        'userInfo': userInfo
+    }
+    context = RequestContext(request, templateVars)
+    return render(request, 'pages/about.html', context)
+
+
+@get_user_info
+def browse(request, userInfo=None):
+    templateVars = {
+        'userInfo': userInfo
+    }
+    context = RequestContext(request, templateVars)
+    return render(request, 'pages/browse.html', context)
+
+
+@get_user_info
+def error_404(request, userInfo=None):
+    templateVars = {
+        'userInfo': userInfo
+    }
+    context = RequestContext(request, templateVars)
+    return render(request, 'pages/error_404.html', context)
+
+
+@get_user_info
+def error_500(request, userInfo=None):
+    templateVars = {
+        'userInfo': userInfo
+    }
+    context = RequestContext(request, templateVars)
+    return render(request, 'pages/error_500.html', context)

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}About - Datavizer{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <h1>Login problems!</h1>
+    {% if userInfo is not None %}
+    <p>You are not allowed to view this page.</p>
+    {% else %}
+    <p>You must be logged in to access this page.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
