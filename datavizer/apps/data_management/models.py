@@ -14,6 +14,9 @@ class DataField(models.Model):
     name = models.CharField(max_length=255)
     optional = models.BooleanField()  # whether or not this field should be required when adding new data to the system.
 
+    def __unicode__(self):
+        return u'%s' % self.name
+
 
 class Datum(models.Model):
     """
@@ -24,6 +27,12 @@ class Datum(models.Model):
     datatype = models.ForeignKey('DataType')
     owner = models.ForeignKey(User)
     data = JSONField()
+
+    def __unicode__(self):
+        return u'datum of type %s created on %s' % (self.datatype, self.date_added)
+
+    class Meta:
+        verbose_name_plural = "data"
 
 
 class DataType(models.Model):
@@ -36,3 +45,6 @@ class DataType(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User)
     fields = models.ManyToManyField(DataField)
+
+    def __unicode__(self):
+        return u'%s' % self.name
