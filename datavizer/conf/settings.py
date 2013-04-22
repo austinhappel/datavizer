@@ -131,7 +131,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     "compressor",
-
+    'apps.data_management',
+    'apps.pages',
+    'apps.user_management'
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
