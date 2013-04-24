@@ -4,20 +4,6 @@ from jsonfield import JSONField
 from django.contrib.auth.models import User
 
 
-# text, integer, float, date
-class DataField(models.Model):
-    """
-    An individual field in a datatype. These are hard-coded(?) fields that have
-    specific validation requirements. A datatype is comprised of a list of
-    these datafields.
-    """
-    name = models.CharField(max_length=255)
-    optional = models.BooleanField()  # whether or not this field should be required when adding new data to the system.
-
-    def __unicode__(self):
-        return u'%s' % self.name
-
-
 class Datum(models.Model):
     """
     Individual piece of data. Each piece of data has a data type associated
@@ -27,6 +13,7 @@ class Datum(models.Model):
     datatype = models.ForeignKey('DataType')
     owner = models.ForeignKey(User)
     data = JSONField()
+    dataset = models.ForeignKey('DataSet')
 
     def __unicode__(self):
         return u'datum of type %s created on %s' % (self.datatype, self.date_added)
@@ -44,7 +31,14 @@ class DataType(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User)
-    fields = models.ManyToManyField(DataField)
 
     def __unicode__(self):
         return u'%s' % self.name
+
+
+class DataSet(models.Model):
+    """
+    A set of data comprised of multiple points of data (datum)
+    """
+    name = models.CharField(max_length=2048)
+    description = models.TextField()

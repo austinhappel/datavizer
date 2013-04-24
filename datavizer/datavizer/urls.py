@@ -21,6 +21,9 @@ urlpatterns = patterns('',
     # user account views
     (r'^user/', include('apps.user_management.urls')),
 
+    # data views
+    (r'^data/', include('apps.data_management.urls')),
+
     # pages urls
     # home
     url(r'^/?$', 'apps.pages.views.index', name='index'),

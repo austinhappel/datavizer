@@ -1,9 +1,5 @@
 from django.contrib import admin
-from apps.data_management.models import DataField, Datum, DataType
-
-
-class DataFieldAdmin(admin.ModelAdmin):
-    fields = ['name', 'optional']
+from apps.data_management.models import Datum, DataType
 
 
 class DatumAdmin(admin.ModelAdmin):
@@ -11,9 +7,8 @@ class DatumAdmin(admin.ModelAdmin):
 
 
 class DataTypeAdmin(admin.ModelAdmin):
-    fields = ['name', 'owner', 'fields']
+    fields = ['name', 'owner']
 
 
-admin.site.register(DataField, DataFieldAdmin)
 admin.site.register(DataType, DataTypeAdmin)
 admin.site.register(Datum, DatumAdmin)
