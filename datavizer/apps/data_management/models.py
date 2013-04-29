@@ -31,6 +31,7 @@ class DataType(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User)
+    schema = JSONField()
 
     def __unicode__(self):
         return u'%s' % self.name

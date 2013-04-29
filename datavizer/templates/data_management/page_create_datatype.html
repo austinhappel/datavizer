@@ -3,10 +3,108 @@
 {% block title %}Create New Datatype - Datavizer{% endblock %}
 
 {% block content %}
-
 <div class="row">
-    <h1>Create DataType</h1>
-    {{ form }}
+    <h1 class="form-title">Create DataType</h1>
 </div>
+<div class="row">
+    <div class="span6">
+        <form action="{% url 'apps.data_management.views.create_datatype' %}" method="post" id="form-create-datatype">
+            {% csrf_token %}
+            <h2>{{ form_datatype.name.label }}</h2>
+            {{ form_datatype.name }}
+            <hr>
+            <h2>Fields</h2>
+            <div class="fields">
+            </div>
+            {{ form_datatype.schema }}
+            <button class="btn" id="form-create-datatype-btn-add-more-fields">add more</button>
+            <hr>
+            <button class="btn" id="form-create-datatype-btn-submit">Create Datatype</button>
+        </form>
+    </div>
+    <div class="span6">
+        <h2>JSON data structure</h2>
+        <p>This is the structure our API will expect your datatype to be sent as.</p>
+        <pre id="create-datatype-json-schema">
+            Empty...
+        </pre>
+    </div>
+</div>
+<script type="text/template" id="add-more-fields-template">
+    <div class="field clearfix">
+        <div class="field-name-container">
+            <label for="create_datatype_field_name_<%= fieldNum %>">Name:</label>
+            <input type="text" class="field-name"></input>
+        </div>
+        <div class="field-type-container">
+        <label for="create_datatype_field_type_<%= fieldNum %>">Field Type:</label>
+        <select id="create_datatype_field_type_<%= fieldNum %>" class="field-type">
+            {% for fieldValue, fieldName in create_datatype_field_options %}
+                <option value="{{ fieldValue }}">{{ fieldName }}</option>
+            {% endfor %}
+        </select>
+        </div>
+    </div>
+</script>
+{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+    (function (global) {
+        var schema,
+            template = _.template($('#add-more-fields-template').html()),
+            fieldCount = 0
+
+        function addDataTypeField() {
+            $('#form-create-datatype .fields').append(template({fieldNum: fieldCount}));
+            fieldCount += 1;
+            bindChangeEvents();
+        }
+
+
+        function getFields() {
+            var data = {};
+            $('#form-create-datatype .fields .field').each(function () {
+                var $this = $(this),
+                    fieldName = $this.find('input.field-name').val(),
+                    fieldType = $this.find('select.field-type option:selected').val();
+                data[fieldName] = fieldType;
+            });
+            console.log(data);
+            return data;
+        }
+
+        function updateJSONPreview() {
+            var preview = {
+                type: $('#form-create-datatype #id_name').val(),
+                data: getFields()
+            };
+
+            $('#create-datatype-json-schema').text(JSON.stringify(preview, undefined, 4));
+
+        }
+
+        function bindChangeEvents() {
+            $('#form-create-datatype input, #form-create-datatype select').off('change');
+            $('#form-create-datatype input, #form-create-datatype select').on('change', function () {
+                console.log('CHANGING');
+                updateJSONPreview();
+            });
+        }
+
+        $('#form-create-datatype-btn-add-more-fields').click(function (e) {
+            e.preventDefault();
+            addDataTypeField();
+        });
+
+        $('#form-create-datatype-btn-submit').click(function (e) {
+            e.preventDefault();
+            
+            $('#id_schema').text(JSON.stringify(getFields()));
+        });
+
+
+        addDataTypeField();
+    }(this));
+</script>
 {% endblock %}

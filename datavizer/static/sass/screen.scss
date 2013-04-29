@@ -19,7 +19,38 @@
 --------------------------------------------------------------------------------*/
 
 .user-info {
-
+    
 }
 
 
+/* `Form
+--------------------------------------------------------------------------------*/
+
+h1.form-title {
+    background: #eee;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+/* `Form: Create Datatype
+--------------------------------------------------------------------------------*/
+
+#form-create-datatype {
+    .fields {
+        input {
+            margin-right: 10px;
+        }
+        label {
+            margin-right: 10px;
+        }
+
+        .field div {
+            float: left;
+        }
+    }
+
+    #id_schema {
+        display: none;
+    }
+}

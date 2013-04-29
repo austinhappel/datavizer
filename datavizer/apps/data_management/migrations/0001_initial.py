@@ -8,54 +8,45 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'DataField'
-        db.create_table(u'data_management_datafield', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('optional', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal(u'data_management', ['DataField'])
-
         # Adding model 'Datum'
         db.create_table(u'data_management_datum', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_added', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
+            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('datatype', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['data_management.DataType'])),
             ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('data', self.gf('jsonfield.fields.JSONField')(default={})),
+            ('dataset', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['data_management.DataSet'])),
         ))
         db.send_create_signal(u'data_management', ['Datum'])
 
         # Adding model 'DataType'
         db.create_table(u'data_management_datatype', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_added', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
+            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('schema', self.gf('jsonfield.fields.JSONField')(default={})),
         ))
         db.send_create_signal(u'data_management', ['DataType'])
 
-        # Adding M2M table for field fields on 'DataType'
-        db.create_table(u'data_management_datatype_fields', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('datatype', models.ForeignKey(orm[u'data_management.datatype'], null=False)),
-            ('datafield', models.ForeignKey(orm[u'data_management.datafield'], null=False))
+        # Adding model 'DataSet'
+        db.create_table(u'data_management_dataset', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=2048)),
+            ('description', self.gf('django.db.models.fields.TextField')()),
         ))
-        db.create_unique(u'data_management_datatype_fields', ['datatype_id', 'datafield_id'])
+        db.send_create_signal(u'data_management', ['DataSet'])
 
 
     def backwards(self, orm):
-        # Deleting model 'DataField'
-        db.delete_table(u'data_management_datafield')
-
         # Deleting model 'Datum'
         db.delete_table(u'data_management_datum')
 
         # Deleting model 'DataType'
         db.delete_table(u'data_management_datatype')
 
-        # Removing M2M table for field fields on 'DataType'
-        db.delete_table('data_management_datatype_fields')
+        # Deleting model 'DataSet'
+        db.delete_table(u'data_management_dataset')
 
 
     models = {
@@ -95,25 +86,26 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'data_management.datafield': {
-            'Meta': {'object_name': 'DataField'},
+        u'data_management.dataset': {
+            'Meta': {'object_name': 'DataSet'},
+            'description': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'optional': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '2048'})
         },
         u'data_management.datatype': {
             'Meta': {'object_name': 'DataType'},
-            'date_added': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'fields': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['data_management.DataField']", 'symmetrical': 'False'}),
+            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'schema': ('jsonfield.fields.JSONField', [], {'default': '{}'})
         },
         u'data_management.datum': {
             'Meta': {'object_name': 'Datum'},
             'data': ('jsonfield.fields.JSONField', [], {'default': '{}'}),
+            'dataset': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['data_management.DataSet']"}),
             'datatype': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['data_management.DataType']"}),
-            'date_added': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }

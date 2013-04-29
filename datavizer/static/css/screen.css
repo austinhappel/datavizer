@@ -6,3 +6,30 @@
 --------------------------------------------------------------------------------*/
 /* `user info widget
 --------------------------------------------------------------------------------*/
+/* `Form
+--------------------------------------------------------------------------------*/
+/* line 29, ../sass/screen.scss */
+h1.form-title {
+  background: #eee;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* `Form: Create Datatype
+--------------------------------------------------------------------------------*/
+/* line 41, ../sass/screen.scss */
+#form-create-datatype .fields input {
+  margin-right: 10px;
+}
+/* line 44, ../sass/screen.scss */
+#form-create-datatype .fields label {
+  margin-right: 10px;
+}
+/* line 48, ../sass/screen.scss */
+#form-create-datatype .fields .field div {
+  float: left;
+}
+/* line 53, ../sass/screen.scss */
+#form-create-datatype #id_schema {
+  display: none;
+}

@@ -1,4 +1,4 @@
 data_fields_form_choices = (
-    ('text', 'textField'),
-    ('number', 'numberField')
+    ('textField', 'text'),
+    ('numberField', 'number')
 )

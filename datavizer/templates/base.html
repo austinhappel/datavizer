@@ -44,7 +44,7 @@
                             {% if userInfo.username %}
                             <a href="{% url 'apps.user_management.views.user_account' %}">Your account</a>
                             {% else %}
-                            <a href="accounts/login">Login</a>
+                            <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
                             {% endif %}
                         </li>
                         <li {% if activePage == 'about' %} class="active" {% endif %}>
@@ -61,8 +61,16 @@
         {% block content %}{% endblock %}
 
     </section>
+
     {% compress javascript %}
+    <script src="/static/js/jquery-1.9.1.js"></script>
     <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/lodash.js"></script>
+    {% endcompress %}
+    
+    {% compress javascript %}
+    {% block scripts %}
+    {% endblock %}
     {% endcompress %}
 </body>
 </html>
