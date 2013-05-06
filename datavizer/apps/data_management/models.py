@@ -2,6 +2,7 @@ from django.db import models
 # from apps.data_management.json_field import JSONField
 from jsonfield import JSONField
 from django.contrib.auth.models import User
+from django.core.validators import validate_slug
 
 
 class Datum(models.Model):
@@ -29,12 +30,16 @@ class DataType(models.Model):
     it's datatype.
     """
     date_added = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, validators=[validate_slug])
     owner = models.ForeignKey(User)
     schema = JSONField()
 
     def __unicode__(self):
         return u'%s' % self.name
+
+    class Meta:
+        # unique together is not working...
+        unique_together = ('name', 'owner')
 
 
 class DataSet(models.Model):

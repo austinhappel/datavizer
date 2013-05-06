@@ -6,11 +6,39 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from forms import DataTypeForm
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class DataTypeFormTestCase(TestCase):
+    def test_bad_schema(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests bad schema being passed as values for the datatype fields.
         """
-        self.assertEqual(1 + 1, 2)
+        datatype = DataTypeForm({
+            u'name': u'faaa',
+            u'schema': u'{"sdf":"buttField"}'
+        })
+
+        self.assertEquals(False, datatype.is_valid())
+
+    def test_bad_field_name(self):
+        """
+        Tests that the form is invalid if a field name is not alphanumeric.
+        """
+        datatype = DataTypeForm({
+            u'name': u'faaa',
+            u'schema': u'{"what!":"textField"}'
+        })
+
+        self.assertEquals(False, datatype.is_valid())
+
+    def test_bad_form_title(self):
+        """
+        Tests that the form is invalid if the datatype name is not alphanumeric.
+        """
+        datatype = DataTypeForm({
+            u'name': u'faaa!',
+            u'schema': u'{"what":"textField"}'
+        })
+
+        self.assertEquals(False, datatype.is_valid())

@@ -8,12 +8,22 @@
 </div>
 <div class="row">
     <div class="span6">
+        <div class="errors">
+            {% if errors != None %}
+            {{ errors }}
+            {% endif %}
+        </div>
+        {% if save_success == True %}
+        <div class="save-success">
+            <h2>Datatype saved successfully.</h2>
+        </div>
+        {% endif %}
         <form action="{% url 'apps.data_management.views.create_datatype' %}" method="post" id="form-create-datatype">
             {% csrf_token %}
             <h2>{{ form_datatype.name.label }}</h2>
             {{ form_datatype.name }}
             <hr>
-            <h2>Fields</h2>
+            <h2>Schema Fields</h2>
             <div class="fields">
             </div>
             {{ form_datatype.schema }}
@@ -30,6 +40,7 @@
         </pre>
     </div>
 </div>
+
 <script type="text/template" id="add-more-fields-template">
     <div class="field clearfix">
         <div class="field-name-container">
@@ -70,9 +81,10 @@
                     fieldType = $this.find('select.field-type option:selected').val();
                 data[fieldName] = fieldType;
             });
-            console.log(data);
+
             return data;
         }
+
 
         function updateJSONPreview() {
             var preview = {
@@ -92,6 +104,7 @@
             });
         }
 
+
         $('#form-create-datatype-btn-add-more-fields').click(function (e) {
             e.preventDefault();
             addDataTypeField();
@@ -101,10 +114,11 @@
             e.preventDefault();
             
             $('#id_schema').text(JSON.stringify(getFields()));
+            $('#form-create-datatype').submit();
         });
 
-
         addDataTypeField();
+
     }(this));
 </script>
 {% endblock %}
