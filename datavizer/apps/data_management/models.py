@@ -38,7 +38,6 @@ class DataType(models.Model):
         return u'%s' % self.name
 
     class Meta:
-        # unique together is not working...
         unique_together = ('name', 'owner')
 
 
@@ -48,3 +47,8 @@ class DataSet(models.Model):
     """
     name = models.CharField(max_length=2048)
     description = models.TextField()
+    owner = models.ForeignKey(User)
+    datatype = models.ForeignKey(DataType)
+
+    class Meta:
+        unique_together = ('name', 'owner')

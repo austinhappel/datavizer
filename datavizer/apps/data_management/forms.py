@@ -1,10 +1,21 @@
 from django import forms
 from data_fields import data_fields_form_choices
-from .models import DataType  # , Datum, DataSet
+from .models import DataType, DataSet  # , Datum
 from django.forms import ModelForm
 # from django.forms.models import inlineformset_factory
 from django.core.validators import validate_slug
 from apps.user_management.utils import user_from_session_key
+
+
+class DataSetForm(ModelForm):
+
+    def __init__(self, user, *args, **kwargs):
+        super(DataSetForm, self).__init__(*args, **kwargs)
+        self.fields['datatype'] = forms.ModelChoiceField(queryset=DataType.objects.filter(owner=user))
+
+    class Meta:
+        model = DataSet
+        exclude = ('owner', )
 
 
 class CreateNewDataType(forms.Form):

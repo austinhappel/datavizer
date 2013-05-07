@@ -47,6 +47,14 @@
                             <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
                             {% endif %}
                         </li>
+                        {% if userInfo.username %}
+                        <li {% if activePage == 'create_datatype' %} class="active" {% endif %}>
+                            <a href="{% url 'apps.data_management.views.create_datatype' %}">Create Datatype</a>
+                        </li>
+                        <li {% if activePage == 'create_dataset' %} class="active" {% endif %}>
+                            <a href="{% url 'apps.data_management.views.create_dataset' %}">Create Dataset</a>
+                        </li>
+                        {% endif %}
                         <li {% if activePage == 'about' %} class="active" {% endif %}>
                             <a href="{% url 'apps.pages.views.about' %}">About</a>
                         </li>
