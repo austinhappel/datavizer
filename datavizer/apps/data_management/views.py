@@ -1,13 +1,66 @@
 # from django.http import HttpResponse
 from django.shortcuts import render  # get_object_or_404
 from django.template import RequestContext
+from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from apps.user_management.view_decorators import get_user_info
 from apps.user_management.utils import user_from_session_key
 from django.contrib.auth.decorators import login_required
-from forms import DataTypeForm, DataSetForm
+from forms import DataTypeForm, DataSetForm, AddDatumForm
 from data_fields import data_fields_form_choices
 from .models import DataType, DataSet
 from django.db import IntegrityError
+import json
+
+
+@get_user_info
+@login_required
+def import_data(request, userInfo=None):
+    pass
+
+
+@get_user_info
+@login_required
+def import_datum(request, userInfo=None):
+    pass
+
+
+@login_required
+def get_dataset_schema(request, userInfo=None, id=None):
+    user = user_from_session_key(request.session.session_key)
+
+    if request.method == 'GET':
+        try:
+            target_dataset = DataSet.objects.filter(owner=user).get(pk=int(id))
+
+            responseData = {
+                'res': 'ok',
+                'schema': target_dataset.datatype.schema
+            }
+        except ObjectDoesNotExist:
+            responseData = {'res': 'err'}
+    return HttpResponse(json.dumps(responseData), mimetype="application/json")
+
+
+@get_user_info
+@login_required
+def add_data(request, userInfo=None):
+    errors = None
+    save_success = None
+    user = user_from_session_key(request.session.session_key)
+
+    templateVars = {
+        'form_datum': AddDatumForm(user),
+        'form_datum_fields': {},
+        'userInfo': userInfo,
+        'errors': errors,
+        'save_success': save_success,
+        'activePage': 'create_dataset'
+    }
+
+    context = RequestContext(request, templateVars)
+
+    return render(request, 'data_management/page_add_data.html', context)
 
 
 @get_user_info

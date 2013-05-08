@@ -1,10 +1,19 @@
 from django import forms
 from data_fields import data_fields_form_choices
-from .models import DataType, DataSet  # , Datum
+from .models import DataType, DataSet, Datum
 from django.forms import ModelForm
 # from django.forms.models import inlineformset_factory
 from django.core.validators import validate_slug
 from apps.user_management.utils import user_from_session_key
+
+
+class AddDatumForm(ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(AddDatumForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Datum
+        exclude = ('owner', )
 
 
 class DataSetForm(ModelForm):
@@ -12,6 +21,7 @@ class DataSetForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(DataSetForm, self).__init__(*args, **kwargs)
         self.fields['datatype'] = forms.ModelChoiceField(queryset=DataType.objects.filter(owner=user))
+        self.fields['name'].label = 'Name / Unique identifier'
 
     class Meta:
         model = DataSet

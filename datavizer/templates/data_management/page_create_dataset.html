@@ -5,6 +5,10 @@
 {% block content %}
 <div class="row">
     <h1 class="form-title">Create DataSet</h1>
+    <p>
+        A dataset is a set of data points. Datavizr validates data
+        added to this dataset based on the DataType it is based upon.
+    </p>
 </div>
 <div class="row">
     <div class="span6">
@@ -22,89 +26,13 @@
             {% csrf_token %}
             {{ form_dataset }}
             <hr>
-            <button class="btn" id="form-create-dataset-btn-submit">Create Datatype</button>
+            <button class="btn" id="form-create-dataset-btn-submit">Create Dataset</button>
         </form>
     </div>
 </div>
 
-<script type="text/template" id="add-more-fields-template">
-    <div class="field clearfix">
-        <div class="field-name-container">
-            <label for="create_datatype_field_name_<%= fieldNum %>">Name:</label>
-            <input type="text" class="field-name"></input>
-        </div>
-        <div class="field-type-container">
-        <label for="create_datatype_field_type_<%= fieldNum %>">Field Type:</label>
-        <select id="create_datatype_field_type_<%= fieldNum %>" class="field-type">
-            {% for fieldValue, fieldName in create_datatype_field_options %}
-                <option value="{{ fieldValue }}">{{ fieldName }}</option>
-            {% endfor %}
-        </select>
-        </div>
-    </div>
-</script>
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript">
-    (function (global) {
-        var schema,
-            template = _.template($('#add-more-fields-template').html()),
-            fieldCount = 0
 
-        function addDataTypeField() {
-            $('#form-create-datatype .fields').append(template({fieldNum: fieldCount}));
-            fieldCount += 1;
-            bindChangeEvents();
-        }
-
-
-        function getFields() {
-            var data = {};
-            $('#form-create-datatype .fields .field').each(function () {
-                var $this = $(this),
-                    fieldName = $this.find('input.field-name').val(),
-                    fieldType = $this.find('select.field-type option:selected').val();
-                data[fieldName] = fieldType;
-            });
-
-            return data;
-        }
-
-
-        function updateJSONPreview() {
-            var preview = {
-                type: $('#form-create-datatype #id_name').val(),
-                data: getFields()
-            };
-
-            $('#create-datatype-json-schema').text(JSON.stringify(preview, undefined, 4));
-
-        }
-
-        function bindChangeEvents() {
-            $('#form-create-datatype input, #form-create-datatype select').off('change');
-            $('#form-create-datatype input, #form-create-datatype select').on('change', function () {
-                console.log('CHANGING');
-                updateJSONPreview();
-            });
-        }
-
-
-        $('#form-create-datatype-btn-add-more-fields').click(function (e) {
-            e.preventDefault();
-            addDataTypeField();
-        });
-
-        $('#form-create-datatype-btn-submit').click(function (e) {
-            e.preventDefault();
-            
-            $('#id_schema').text(JSON.stringify(getFields()));
-            $('#form-create-datatype').submit();
-        });
-
-        addDataTypeField();
-
-    }(this));
-</script>
 {% endblock %}

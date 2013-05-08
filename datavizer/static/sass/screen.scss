@@ -54,3 +54,20 @@ h1.form-title {
         display: none;
     }
 }
+
+
+/* `Form: Create DataSet / add datum
+--------------------------------------------------------------------------------*/
+
+#form-create-dataset,
+#form-add-datum {
+
+    input {
+        width: 100%;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+}

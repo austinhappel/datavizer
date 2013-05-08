@@ -11,7 +11,6 @@ class Datum(models.Model):
     with it, which will govern how this piece of data is validated.
     """
     date_added = models.DateTimeField(auto_now_add=True)
-    datatype = models.ForeignKey('DataType')
     owner = models.ForeignKey(User)
     data = JSONField()
     dataset = models.ForeignKey('DataSet')
@@ -49,6 +48,9 @@ class DataSet(models.Model):
     description = models.TextField()
     owner = models.ForeignKey(User)
     datatype = models.ForeignKey(DataType)
+
+    def __unicode__(self):
+        return u'%s' % self.name
 
     class Meta:
         unique_together = ('name', 'owner')

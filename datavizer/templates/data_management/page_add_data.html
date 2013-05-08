@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Create New Datatype - Datavizer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <h1 class="form-title">Add Data</h1>
+</div>
+<div class="row">
+    <div class="span6">
+        <div class="errors">
+            {% if errors != None %}
+            {{ errors }}
+            {% endif %}
+        </div>
+        {% if save_success == True %}
+        <div class="save-success">
+            <h2>Data saved successfully.</h2>
+        </div>
+        {% endif %}
+        <form action="{% url 'apps.data_management.views.import_datum' %}" method="post" id="form-add-datum">
+            {% csrf_token %}
+            {{ form_datum }}
+            <h3>Fields</h3>
+            <div id="data-fields">
+            </div>
+            <hr>
+            <button class="btn" id="form-create-dataset-btn-submit">Create Datatype</button>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/template" id="data-field-template">
+    <div class="data-field-text">
+        <label for="field-<%= fieldName %>">Value for <%= fieldName %></label>
+        <input type="text" id="field-<%= fieldName %>"></input>
+    </div>
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/static/js/form-add-data.js"></script>
+{% endblock %}

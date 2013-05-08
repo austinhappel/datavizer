@@ -3,7 +3,7 @@ from apps.data_management.models import Datum, DataType
 
 
 class DatumAdmin(admin.ModelAdmin):
-    fields = ['datatype', 'owner', 'data']
+    fields = ['owner', 'data']
 
 
 class DataTypeAdmin(admin.ModelAdmin):

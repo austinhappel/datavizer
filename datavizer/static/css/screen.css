@@ -33,3 +33,16 @@ h1.form-title {
 #form-create-datatype #id_schema {
   display: none;
 }
+
+/* `Form: Create DataSet / add datum
+--------------------------------------------------------------------------------*/
+/* line 65, ../sass/screen.scss */
+#form-create-dataset input,
+#form-add-datum input {
+  width: 100%;
+}
+/* line 69, ../sass/screen.scss */
+#form-create-dataset textarea,
+#form-add-datum textarea {
+  width: 100%;
+}

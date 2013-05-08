@@ -57,68 +57,9 @@
         </div>
     </div>
 </script>
+
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript">
-    (function (global) {
-        var schema,
-            template = _.template($('#add-more-fields-template').html()),
-            fieldCount = 0
-
-        function addDataTypeField() {
-            $('#form-create-datatype .fields').append(template({fieldNum: fieldCount}));
-            fieldCount += 1;
-            bindChangeEvents();
-        }
-
-
-        function getFields() {
-            var data = {};
-            $('#form-create-datatype .fields .field').each(function () {
-                var $this = $(this),
-                    fieldName = $this.find('input.field-name').val(),
-                    fieldType = $this.find('select.field-type option:selected').val();
-                data[fieldName] = fieldType;
-            });
-
-            return data;
-        }
-
-
-        function updateJSONPreview() {
-            var preview = {
-                type: $('#form-create-datatype #id_name').val(),
-                data: getFields()
-            };
-
-            $('#create-datatype-json-schema').text(JSON.stringify(preview, undefined, 4));
-
-        }
-
-        function bindChangeEvents() {
-            $('#form-create-datatype input, #form-create-datatype select').off('change');
-            $('#form-create-datatype input, #form-create-datatype select').on('change', function () {
-                console.log('CHANGING');
-                updateJSONPreview();
-            });
-        }
-
-
-        $('#form-create-datatype-btn-add-more-fields').click(function (e) {
-            e.preventDefault();
-            addDataTypeField();
-        });
-
-        $('#form-create-datatype-btn-submit').click(function (e) {
-            e.preventDefault();
-            
-            $('#id_schema').text(JSON.stringify(getFields()));
-            $('#form-create-datatype').submit();
-        });
-
-        addDataTypeField();
-
-    }(this));
-</script>
+<script type="text/javascript" src="/static/js/form-create-datatype.js"></script>
 {% endblock %}

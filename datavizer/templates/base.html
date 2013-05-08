@@ -4,8 +4,8 @@
     {% load compress %}
 
     {% compress css %}
-    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" charset="utf-8">
-    <link rel="stylesheet" href="/static/css/bootstrap-responsive.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap-responsive.css" type="text/css" charset="utf-8">
     <link rel="stylesheet" href="/static/css/screen.css" type="text/css" charset="utf-8">
     {% endcompress %}
     <title>{% block title %}Datavizer{% endblock %}</title>
@@ -54,6 +54,9 @@
                         <li {% if activePage == 'create_dataset' %} class="active" {% endif %}>
                             <a href="{% url 'apps.data_management.views.create_dataset' %}">Create Dataset</a>
                         </li>
+                        <li {% if activePage == 'add_data' %} class="active" {% endif %}>
+                            <a href="{% url 'apps.data_management.views.add_data' %}">Add Data</a>
+                        </li>
                         {% endif %}
                         <li {% if activePage == 'about' %} class="active" {% endif %}>
                             <a href="{% url 'apps.pages.views.about' %}">About</a>
@@ -71,9 +74,9 @@
     </section>
 
     {% compress javascript %}
-    <script src="/static/js/jquery-1.9.1.js"></script>
-    <script src="/static/js/bootstrap.js"></script>
-    <script src="/static/js/lodash.js"></script>
+    <script src="/static/vendor/jquery-1.9.1.js"></script>
+    <script src="/static/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/static/vendor/lodash.js"></script>
     {% endcompress %}
     
     {% compress javascript %}
