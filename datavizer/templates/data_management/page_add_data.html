@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Create New Datatype - Datavizer{% endblock %}
+{% block title %}Add data - Datavizer{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -18,14 +18,14 @@
             <h2>Data saved successfully.</h2>
         </div>
         {% endif %}
-        <form action="{% url 'apps.data_management.views.import_datum' %}" method="post" id="form-add-datum">
+        <form action="{% url 'apps.data_management.views.add_data' %}" method="post" id="form-add-datum">
             {% csrf_token %}
             {{ form_datum }}
             <h3>Fields</h3>
             <div id="data-fields">
             </div>
             <hr>
-            <button class="btn" id="form-create-dataset-btn-submit">Create Datatype</button>
+            <button class="btn" id="form-add-data-btn-submit">Add Data</button>
         </form>
     </div>
 </div>

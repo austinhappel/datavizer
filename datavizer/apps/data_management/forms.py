@@ -10,6 +10,7 @@ from apps.user_management.utils import user_from_session_key
 class AddDatumForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(AddDatumForm, self).__init__(*args, **kwargs)
+        self.fields['dataset'] = forms.ModelChoiceField(queryset=DataSet.objects.filter(owner=user))
 
     class Meta:
         model = Datum

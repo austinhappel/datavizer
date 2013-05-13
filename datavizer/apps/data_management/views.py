@@ -8,7 +8,7 @@ from apps.user_management.utils import user_from_session_key
 from django.contrib.auth.decorators import login_required
 from forms import DataTypeForm, DataSetForm, AddDatumForm
 from data_fields import data_fields_form_choices
-from .models import DataType, DataSet
+from .models import DataType, DataSet, Datum
 from django.db import IntegrityError
 import json
 
@@ -22,7 +22,13 @@ def import_data(request, userInfo=None):
 @get_user_info
 @login_required
 def import_datum(request, userInfo=None):
-    pass
+
+    responseData = {
+        'res': 'err',
+        'error': 'not implemented yet.'
+    }
+
+    return HttpResponse(json.dumps(responseData), mimetype="application/json")
 
 
 @login_required
@@ -39,6 +45,7 @@ def get_dataset_schema(request, userInfo=None, id=None):
             }
         except ObjectDoesNotExist:
             responseData = {'res': 'err'}
+
     return HttpResponse(json.dumps(responseData), mimetype="application/json")
 
 
@@ -49,13 +56,29 @@ def add_data(request, userInfo=None):
     save_success = None
     user = user_from_session_key(request.session.session_key)
 
+    if request.method == 'POST':
+        form = AddDatumForm(user, request.POST)
+
+        if form.is_valid():
+
+            newDatum = Datum(
+                dataset=form.cleaned_data['dataset'],
+                data=form.cleaned_data['data'],
+                owner=user
+            )
+
+            newDatum.save()
+
+        else:
+            errors = form.errors
+
     templateVars = {
         'form_datum': AddDatumForm(user),
         'form_datum_fields': {},
         'userInfo': userInfo,
         'errors': errors,
         'save_success': save_success,
-        'activePage': 'create_dataset'
+        'activePage': 'add_data'
     }
 
     context = RequestContext(request, templateVars)
