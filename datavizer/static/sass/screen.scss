@@ -71,3 +71,18 @@ h1.form-title {
     }
 
 }
+
+/* `Form: add data;
+--------------------------------------------------------------------------------*/
+
+#form-add-datum {
+    #id_data {
+        display: none;
+    }
+
+    label[for=id_data] {
+        display: none;
+    }
+}
+
+

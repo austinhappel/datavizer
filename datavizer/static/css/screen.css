@@ -46,3 +46,14 @@ h1.form-title {
 #form-add-datum textarea {
   width: 100%;
 }
+
+/* `Form: add data;
+--------------------------------------------------------------------------------*/
+/* line 79, ../sass/screen.scss */
+#form-add-datum #id_data {
+  display: none;
+}
+/* line 83, ../sass/screen.scss */
+#form-add-datum label[for=id_data] {
+  display: none;
+}

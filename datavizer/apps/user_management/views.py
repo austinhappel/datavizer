@@ -1,8 +1,9 @@
 # from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from apps.user_management.utils import get_user_info_from_session_key
+from apps.user_management.utils import get_user_info_from_session_key, user_from_session_key
 from apps.user_management.view_decorators import get_user_info
 from django.template import RequestContext
+from apps.data_management.models import Datum, DataType, DataSet
 
 
 def check_user_access(fn):
@@ -33,14 +34,20 @@ def user_account(request, username=None, userInfo=None):
     """Display the user account. Since this is decorated with checkUserAccess,
     we can assume that a sessionKey always will exist."""
 
+    user = user_from_session_key(request.session.session_key)
+
     if userInfo is None:
         userInfo = get_user_info_from_session_key(request.session.session_key)
 
     templateVars = {
         'userInfo': userInfo,
-        'activePage': 'account'
+        'activePage': 'account',
+        'your_datasets': DataSet.objects.filter(owner=user),
+        'your_datatypes': DataType.objects.filter(owner=user),
+        'your_visualizations': None,
+        'latest_data': Datum.objects.filter(owner=user).order_by('date_added')[:10]
     }
-    print templateVars
+
     context = RequestContext(request, templateVars)
     return render(request, 'user_management/user_account.html', context)
 

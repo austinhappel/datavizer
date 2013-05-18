@@ -191,5 +191,3 @@ REGISTRATION_DEFAULT_GROUP_NAME = 'basic_users'
 # Controls the directory inside COMPRESS_ROOT that compressed files will be written to.
 # Default :   'CACHE'
 # COMPRESS_OUTPUT_DIR
-
-

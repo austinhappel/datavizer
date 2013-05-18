@@ -92,6 +92,7 @@ def create_dataset(request, userInfo=None):
     errors = None
     save_success = None
     user = user_from_session_key(request.session.session_key)
+    title = "Create Dataset"
 
     if request.method == 'POST':
 
@@ -126,12 +127,76 @@ this same name. Please change the name or edit the other dataset of the same nam
         'userInfo': userInfo,
         'errors': errors,
         'save_success': save_success,
-        'activePage': 'create_dataset'
+        'activePage': 'create_dataset',
+        'title': title
     }
 
     context = RequestContext(request, templateVars)
 
-    return render(request, 'data_management/page_create_dataset.html', context)
+    return render(request, 'data_management/page_create_edit_dataset.html', context)
+
+
+@get_user_info
+@login_required
+def edit_dataset(request, userInfo=None, username=None, dataset_id=None):
+        errors = None
+        save_success = None
+        user = user_from_session_key(request.session.session_key)
+
+        if request.method == 'GET':
+            dataset = DataSet.objects.filter(id=dataset_id, owner=user)
+            title = "Edit Dataset: %s" % dataset[0].name
+
+            # if we don't have a dataset of that name, throw a 404
+            if len(dataset) == 0:
+                templateVars = {
+                    'userInfo': userInfo
+                }
+
+                context = RequestContext(request, templateVars)
+                return render(request, 'pages/error_404.html', context)
+
+        if request.method == 'POST':
+
+            form = DataSetForm(user, request.POST)
+            if form.is_valid():
+
+                newDataSet = DataSet(
+                    name=form.cleaned_data['name'],
+                    description=form.cleaned_data['description'],
+                    datatype=form.cleaned_data['datatype'],
+                    owner=user
+                )
+
+                try:
+                    newDataSet.save()
+                    save_success = True
+                except IntegrityError:
+                    errorText = [u'You already have a dataset of \
+    this same name. Please change the name or edit the other dataset of the same name.']
+                    if hasattr(form._errors, 'name'):
+                        form._errors['name'].push(form.error_class(errorText))
+                    else:
+                        form._errors['name'] = form.error_class(errorText)
+
+                    errors = form.errors
+
+            else:
+                errors = form.errors
+
+        print dir(userInfo)
+        templateVars = {
+            'form_dataset': DataSetForm(user),
+            'userInfo': userInfo,
+            'errors': errors,
+            'save_success': save_success,
+            'activePage': 'create_dataset',
+            'title': title
+        }
+
+        context = RequestContext(request, templateVars)
+
+        return render(request, 'data_management/page_create_edit_dataset.html', context)
 
 
 @get_user_info

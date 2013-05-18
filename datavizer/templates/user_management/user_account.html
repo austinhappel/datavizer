@@ -5,8 +5,46 @@
 {% block content %}
 
 <div class="row">
-    <h1>Your Account</h1>
-    <h2>Username: {{ userInfo.username }}</h2>
+    <header class="span12">
+        <h1>Your Account</h1>
+        <h2>Logged in as {{ userInfo.username }}</h2>
+    </header>
+</div>
+<div class="row">
+    <section class="latest-data span12" >
+        <h3>Latest data received:</h3>
+        <div class="data-received">
+            {% for datum in latest_data %}
+                <li>
+                    {{datum}}
+                </li>
+            {% endfor %}
+
+        </div>
+    </section>
+</div>
+<div class="row">
+    <section class="your-datatypes span4">
+        <h3>Your datatypes</h3>
+        {% for type in your_datatypes %}
+            <li>
+                {{type}}
+            </li>
+        {% endfor %}
+    </section>
+    <section class="your-datasets span4">
+        <h3>Your datasets</h3>
+        {% for set in your_datasets %}
+            <li>
+                <a href="{% url 'apps.data_management.views.edit_dataset' username=userInfo.username dataset_id=set.id %}">{{set}}</a>
+            </li>
+        {% endfor %}
+    </section>
+    <section class="your-visualizations span4">
+        <h3>Your visualizations</h3>
+    </section>
+</div>
+<div class="row">
     <h3>Options:</h3>
     <nav>
         <ul class="nav-tabs nav-stacked">

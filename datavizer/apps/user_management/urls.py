@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 
     url(r'^/?$', 'apps.user_management.views.user_account', name='user_account'),
     url(r'^(?P<username>[a-zA-Z0-9_\-]*)/$', 'apps.user_management.views.user_account', name='user_account'),
+    url(r'^(?P<username>[a-zA-Z0-9_\-]*)/data/', include('apps.data_management.urls_user_specific')),
 )

@@ -16,7 +16,7 @@ class Datum(models.Model):
     dataset = models.ForeignKey('DataSet')
 
     def __unicode__(self):
-        return u'datum of type %s created on %s' % (self.datatype, self.date_added)
+        return u'datum of type %s created on %s' % (self.dataset, self.date_added)
 
     class Meta:
         verbose_name_plural = "data"
