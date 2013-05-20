@@ -1,6 +1,11 @@
 from django.conf.urls import patterns, include, url
+from tastypie.api import Api
+from .api import DatumResource
 
 # (?P<name>pattern)
+
+v1_api = Api(api_name='v1')
+v1_api.register(DatumResource())
 
 urlpatterns = patterns('',
     # Examples:
@@ -19,4 +24,8 @@ urlpatterns = patterns('',
     url(r'^import_datum/$', 'apps.data_management.views.import_datum', name='import_datum'),
     url(r'^import_data/$', 'apps.data_management.views.import_data', name='import_data'),
     url(r'^get_dataset_schema/(?P<id>\d+)/$', 'apps.data_management.views.get_dataset_schema', name='get_dataset_schema'),
+
+    # tastypie datum api
+    url(r'^api/', include(v1_api.urls)),
+
 )

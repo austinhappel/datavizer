@@ -28,7 +28,7 @@
         <h3>Your datatypes</h3>
         {% for type in your_datatypes %}
             <li>
-                {{type}}
+                <a href="{% url 'apps.data_management.views.edit_datatype' username=userInfo.username datatype_id=type.id %}">{{ type }}</a>
             </li>
         {% endfor %}
     </section>

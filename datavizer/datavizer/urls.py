@@ -32,6 +32,9 @@ urlpatterns = patterns('',
 
     # browse
     url(r'^browse/?$', 'apps.pages.views.browse', name='browse'),
+
+    # oauth2
+    url(r'^oauth2/', include('provider.oauth2.urls', namespace='oauth2'))
 )
 
 handler404 = 'apps.pages.views.error_404'

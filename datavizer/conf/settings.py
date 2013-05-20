@@ -2,6 +2,7 @@
 
 import os
 
+SITE_URL = 'http://datavizer.austinhappel.com'
 PROJECT_DIR = os.getcwd()
 
 DEBUG = True
@@ -133,7 +134,10 @@ INSTALLED_APPS = (
     "compressor",
     'apps.data_management',
     'apps.pages',
-    'apps.user_management'
+    'apps.user_management',
+    'provider',
+    'provider.oauth2',
+    'tastypie',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

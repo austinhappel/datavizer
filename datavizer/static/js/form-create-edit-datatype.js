@@ -56,6 +56,51 @@
     }
 
 
+    function initDataTypeFields() {
+        var fieldJSON = $('#form-create-datatype #id_schema').text(),
+            parsedFieldJSON,
+            arrFields = [],
+            i,
+            len;
+
+        if (fieldJSON.length > 0) {
+            parsedFieldJSON = JSON.parse(fieldJSON);
+
+            // default form has one field, so we need to add 1 less than what's
+            // in the parsed json.
+            for (i = 0, len = _.keys(parsedFieldJSON).length - 1; i < len; i += 1) {
+                addDataTypeField();
+            }
+
+            _.each(parsedFieldJSON, function (val, key) {
+                arrFields.push({name: key, val: val});
+            });
+
+            console.log(arrFields);
+            $('#form-create-datatype .field').each(function () {
+                var $field = $(this),
+                    dataFill = arrFields.pop();
+
+                $field
+                    .find('.field-name')
+                    .eq(0)
+                    .val(dataFill.name);
+
+                $field
+                    .find('.field-type option')
+                    .each(function () {
+                        var $option = $(this);
+
+                        if ($option.val() === dataFill.val) {
+                            console.log('havematch');
+                            $option.attr('selected', 'selected');
+                        }
+                    });
+
+            });
+        }
+    }
+
     $('#form-create-datatype-btn-add-more-fields').click(function (e) {
         e.preventDefault();
         addDataTypeField();
@@ -63,11 +108,11 @@
 
     $('#form-create-datatype-btn-submit').click(function (e) {
         e.preventDefault();
-
         $('#id_schema').text(JSON.stringify(getFields()));
         $('#form-create-datatype').submit();
     });
 
     addDataTypeField();
+    initDataTypeFields();
 
 }(this));

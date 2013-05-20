@@ -3,7 +3,7 @@ from django.db import models
 from jsonfield import JSONField
 from django.contrib.auth.models import User
 from django.core.validators import validate_slug
-
+import signals
 
 class Datum(models.Model):
     """

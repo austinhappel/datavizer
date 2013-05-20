@@ -12,6 +12,8 @@ urlpatterns = patterns('',
 
     # forms
     url(r'^edit_dataset/(?P<dataset_id>[a-zA-Z0-9_\-]*)/$', 'apps.data_management.views.edit_dataset', name='edit_dataset'),
+    url(r'^edit_datatype/(?P<datatype_id>[a-zA-Z0-9_\-]*)/$', 'apps.data_management.views.edit_datatype', name='edit_datatype'),
+
     # url(r'^create_dataset/$', 'apps.data_management.views.create_dataset', name='create_dataset'),
     # url(r'^add_data/$', 'apps.data_management.views.add_data', name='add_data'),
 

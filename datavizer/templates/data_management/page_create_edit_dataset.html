@@ -4,7 +4,13 @@
 
 {% block content %}
 <div class="row">
-    <h1 class="form-title">{{ title }}</h1>
+    <h1 class="form-title">
+        {% if formType == 'create' %}
+            Create Dataset
+        {% else %}
+            Edit Dataset
+        {% endif %}
+    </h1>
     <p>
         A dataset is a set of data points. Datavizr validates data
         added to this dataset based on the DataType it is based upon.
@@ -22,11 +28,23 @@
             <h2>Dataset saved successfully.</h2>
         </div>
         {% endif %}
-        <form action="{% url 'apps.data_management.views.create_dataset' %}" method="post" id="form-create-dataset">
+        <form action="
+            {% if formType == 'create' %}
+                {% url 'apps.data_management.views.create_dataset' %}
+            {% else %}
+                {% url 'apps.data_management.views.edit_dataset' username=userInfo.username dataset_id=dataset.id %}
+            {% endif %}
+            " method="post" id="form-create-dataset">
             {% csrf_token %}
             {{ form_dataset }}
             <hr>
-            <button class="btn" id="form-create-dataset-btn-submit">Create Dataset</button>
+            <button class="btn" id="form-create-dataset-btn-submit">
+                {% if formType == 'create' %}
+                    Create Dataset
+                {% else %}
+                    Update Dataset
+                {% endif %}
+            </button>
         </form>
     </div>
 </div>
