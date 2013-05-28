@@ -20,5 +20,4 @@ urlpatterns = patterns('',
     # # api
     # url(r'^import_datum/$', 'apps.data_management.views.import_datum', name='import_datum'),
     # url(r'^import_data/$', 'apps.data_management.views.import_data', name='import_data'),
-    # url(r'^get_dataset_schema/(?P<id>\d+)/$', 'apps.data_management.views.get_dataset_schema', name='get_dataset_schema'),
 )

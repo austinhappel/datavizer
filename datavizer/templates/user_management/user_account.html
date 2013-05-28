@@ -8,6 +8,10 @@
     <header class="span12">
         <h1>Your Account</h1>
         <h2>Logged in as {{ userInfo.username }}</h2>
+        <h4>Your oauth client key:</h4>
+        <pre>{{ oauth2ClientId }}</pre>
+        <h4>Your oauth client key:</h4>
+        <pre>{{ oauth2ClientSecret }}</pre>
     </header>
 </div>
 <div class="row">
@@ -19,7 +23,6 @@
                     {{datum}}
                 </li>
             {% endfor %}
-
         </div>
     </section>
 </div>

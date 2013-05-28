@@ -6,11 +6,25 @@ from django.core.exceptions import ObjectDoesNotExist
 from apps.user_management.view_decorators import get_user_info
 from apps.user_management.utils import user_from_session_key
 from django.contrib.auth.decorators import login_required
-from forms import DataTypeForm, DataSetForm, AddDatumForm
-from data_fields import data_fields_form_choices
-from .models import DataType, DataSet, Datum
+from forms import DataTypeForm, DataSetForm, AddDatumForm, VisualizationForm
+from constants import data_fields_form_choices
+from .models import DataType, DataSet, Datum, Visualization
 from django.db import IntegrityError
 import json
+
+
+@get_user_info
+@login_required
+def create_visualization(request, userInfo=None):
+
+    templateVars = {
+        'userInfo': userInfo,
+        'activePage': 'create_visualization'
+    }
+
+    context = RequestContext(request, templateVars)
+
+    return render(request, 'data_management/page_create_visualization.html', context)
 
 
 @get_user_info

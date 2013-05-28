@@ -1,10 +1,20 @@
 from django import forms
-from data_fields import data_fields_form_choices
-from .models import DataType, DataSet, Datum
+from constants import data_fields_form_choices, visualization_type_choices
+from .models import DataType, DataSet, Datum, Visualization
 from django.forms import ModelForm
 # from django.forms.models import inlineformset_factory
 from django.core.validators import validate_slug
 from apps.user_management.utils import user_from_session_key
+
+
+class VisualizationForm(ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(VisualizationForm, self).__init__(*args, **kwargs)
+        self.fields['visualization_type'] = forms.ChoiceField(visualization_type_choices)
+
+    class Meta:
+        model = Visualization
+        exclude = ('owner', 'datasets')
 
 
 class AddDatumForm(ModelForm):

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Vizualization Creator - Datavizer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <h1 class="form-title">
+        {% if formType == 'create' %}
+        Create Visualization
+        {% else %}
+        Edit Visualization
+        {% endif %}
+    </h1>
+</div>
+<div class="row">
+    <div class="span6">
+        <div class="errors">
+            {% if errors != None %}
+            {{ errors }}
+            {% endif %}
+        </div>
+        {% if save_success == True %}
+        <div class="save-success">
+            <h2>Visualization saved successfully.</h2>
+        </div>
+        {% endif %}
+        <form action="
+            {% if formType == 'create' %}
+            {% url 'apps.data_management.views_visualization_forms.line_graph' %}
+            {% else %}
+            {% url 'apps.data_management.views_visualization_forms.line_graph' %}
+            {% endif %}
+            " method="post" id="form-create-visualization">
+            {% csrf_token %}
+            {{ form_visualization }}
+            <hr>
+            <h2>Legends</h2>
+            <div id="legends">
+            </div>
+
+            <hr>
+            
+            <button class="btn" id="form-create-visualization-btn-submit">
+                {% if formType == 'create' %}
+                Create Visualization
+                {% else %}
+                Edit Visualization
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+<script type="text/template" id="legend-template">
+    <div class="legend clearfix" id="legend_<%= legendNum %>">
+        <label for="legend_<%= legendNum %>_dataset">Dataset to use:</label>
+        <select id="legend_<%= legendNum %>_dataset" class="legend-dataset">
+        </select>
+        <div class="legend-details">
+            <label for="legend_<%= legendNum %>_legend_name">Name:</label>
+            <input type="text" id="legend_<%= legendNum %>_legend_name" class="legend-name"></input>
+            <label for="legend_<%= legendNum %>_field_for_x_value">Field for X value:</label>
+            <select id="legend_<%= legendNum %>_field_for_x_value" class="legend-xValue field-options">
+            </select>
+            <label for="legend_<%= legendNum %>_field_for_y_value">Field for Y value:</label>
+            <select id="legend_<%= legendNum %>_field_for_y_value" class="legend-yValue field-options">
+            </select>
+            <label for="legend_<%= legendNum %>_legend_color">hex color:</label>
+            <input type="text" id="legend_<%= legendNum %>_legend_color" class="legend-color"></input>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    window.dataset_options = {% autoescape off %} {{ dataset_options }} {% endautoescape %}
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/static/js/visualization_forms/form-create-edit-line-graph.js"></script>
+{% endblock %}

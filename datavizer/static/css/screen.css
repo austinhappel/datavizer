@@ -57,3 +57,22 @@ h1.form-title {
 #form-add-datum label[for=id_data] {
   display: none;
 }
+
+/* `Form: create visualization
+--------------------------------------------------------------------------------*/
+/* line 92, ../sass/screen.scss */
+#form-create-visualization #id_datasets {
+  display: none;
+}
+/* line 96, ../sass/screen.scss */
+#form-create-visualization label[for=id_datasets] {
+  display: none;
+}
+/* line 100, ../sass/screen.scss */
+#form-create-visualization #id_legends {
+  display: none;
+}
+/* line 104, ../sass/screen.scss */
+#form-create-visualization label[for=id_legends] {
+  display: none;
+}

@@ -4,8 +4,7 @@
 (function (global) {
     "use strict";
 
-    var $dataset = $('#id_dataset'),
-        $submit = $('#form-add-data-btn-submit');
+    var $dataset = $('#id_dataset');
 
     function updateDataField() {
         var data = {};
@@ -29,6 +28,7 @@
             updateDataField();
         });
     }
+
     /**
      * On dataset select menu change, add fields based on the new dataset requested.
      * @return {undefined}

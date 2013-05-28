@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}About - Datavizer{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <h1>Choose a visualization type</h1>
+    <ul>
+        <li><a href="{% url 'apps.data_management.views_visualization_forms.line_graph' %}">Line Graph</a></li>
+    </ul>
+
+</div>
+
+{% endblock %}

@@ -4,6 +4,7 @@ from apps.user_management.utils import get_user_info_from_session_key, user_from
 from apps.user_management.view_decorators import get_user_info
 from django.template import RequestContext
 from apps.data_management.models import Datum, DataType, DataSet
+from provider.oauth2.models import Client
 
 
 def check_user_access(fn):
@@ -35,9 +36,14 @@ def user_account(request, username=None, userInfo=None):
     we can assume that a sessionKey always will exist."""
 
     user = user_from_session_key(request.session.session_key)
+    oauth2Client = Client.objects.filter(user=user)
 
     if userInfo is None:
         userInfo = get_user_info_from_session_key(request.session.session_key)
+
+    if oauth2Client is not None and len(oauth2Client) > 0:
+        oauth2ClientId = oauth2Client[0].client_id
+        oauth2ClientSecret = oauth2Client[0].client_secret
 
     templateVars = {
         'userInfo': userInfo,
@@ -45,7 +51,9 @@ def user_account(request, username=None, userInfo=None):
         'your_datasets': DataSet.objects.filter(owner=user),
         'your_datatypes': DataType.objects.filter(owner=user),
         'your_visualizations': None,
-        'latest_data': Datum.objects.filter(owner=user).order_by('date_added')[:10]
+        'latest_data': Datum.objects.filter(owner=user).order_by('date_added')[:10],
+        'oauth2ClientId': oauth2ClientId,
+        'oauth2ClientSecret': oauth2ClientSecret
     }
 
     context = RequestContext(request, templateVars)

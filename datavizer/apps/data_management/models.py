@@ -3,7 +3,39 @@ from django.db import models
 from jsonfield import JSONField
 from django.contrib.auth.models import User
 from django.core.validators import validate_slug
-import signals
+import signals  # required to bind to signals, do not comment out.
+
+
+class Visualization(models.Model):
+    """
+    Visualization of data added to datatypes
+    """
+    owner = models.ForeignKey(User)
+    title = models.CharField(max_length=1024)
+    description = models.TextField()
+    visualization_type = models.CharField(max_length=255)
+    # colors associated with the fields of data.
+    """
+    {
+        legends: [
+            {
+                name: 'lskjdf',
+                dataset: 'dataset id',
+                field1: 'name of dataset field',
+                field2: 'name of dataset field',
+                fieldN: 'name of dataset field',
+                color: '#beefed'
+            }
+        ]
+    }
+    """
+    legends = JSONField()
+    is_public = models.BooleanField()
+    datasets = models.ManyToManyField('DataSet')
+
+    def __unicode__(self):
+        return u'%s' % self.title
+
 
 class Datum(models.Model):
     """

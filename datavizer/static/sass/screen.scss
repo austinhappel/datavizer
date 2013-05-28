@@ -85,4 +85,23 @@ h1.form-title {
     }
 }
 
+/* `Form: create visualization
+--------------------------------------------------------------------------------*/
 
+#form-create-visualization {
+    #id_datasets {
+        display: none;
+    }
+
+    label[for=id_datasets] {
+        display: none;
+    }
+
+    #id_legends {
+        display: none;
+    }
+
+    label[for=id_legends] {
+        display: none;
+    }
+}
